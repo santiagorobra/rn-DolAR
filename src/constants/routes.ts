@@ -1,4 +1,5 @@
 enum Routes {
+  Drawer = 'Drawer',
   Home = 'Home'
 }
 

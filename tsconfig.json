@@ -103,7 +103,8 @@
       "@interfaces/*": ["src/interfaces/*"],
       "@screens/*": ["./src/screens/*"],
       "@utils/*": ["src/utils/*"],
-      "@services/*": ["src/services/*"]
+      "@services/*": ["src/services/*"],
+      "@redux/*": ["src/redux/*"]
     },
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View } from 'react-native';
-import Config from 'react-native-config';
 
 import { TextCustom } from '@components/TextCustom';
 import { Nullable } from '@interfaces/globalInterfaces';
@@ -12,7 +11,6 @@ export const HeaderList = ({ date }: { date: Nullable<string> }) => {
     <View>
       <View style={styles.header}>
         <TextCustom text='Dol-AR' style={styles.title} />
-        <TextCustom text={`Alpha ${Config.VERSION}`} />
       </View>
       {
         !!date &&

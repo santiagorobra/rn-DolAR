@@ -2,12 +2,12 @@ import React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 
-import HomeStack from './HomeStack';
+import DrawerMenu from './DrawerMenu';
 
 function Navigator() {
   return (
     <NavigationContainer>
-      <HomeStack />
+      <DrawerMenu />
     </NavigationContainer>
   );
 };

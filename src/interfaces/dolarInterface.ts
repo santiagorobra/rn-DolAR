@@ -3,4 +3,5 @@ export interface Dolar {
   compra: number;
   venta: number;
   nombre: string;
+  show: boolean;
 };
