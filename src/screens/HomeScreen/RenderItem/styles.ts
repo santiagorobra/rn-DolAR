@@ -11,14 +11,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10
   },
   headerCard: {
-    alignItems: 'center',
-    alignContent: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
   },
   headerText: {
     fontSize: 20,
-    marginRight: 20,
     fontWeight: 'bold',
   },
   bodyCard: {

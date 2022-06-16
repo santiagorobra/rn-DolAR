@@ -1,15 +1,13 @@
 import { StyleSheet } from 'react-native';
 
-import { DARK, WHITE } from '@constants/colors';
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: DARK,
-    paddingHorizontal: 10
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   text: {
-    color: WHITE
+    fontSize: 25
   }
 });
 

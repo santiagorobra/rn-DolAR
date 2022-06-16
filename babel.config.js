@@ -12,7 +12,8 @@ module.exports = {
           '@constants': './src/constants',
           '@interfaces': './src/interfaces',
           '@screens': './src/screens',
-          '@utils': './src/utils'
+          '@utils': './src/utils',
+          '@services': './src/services'
         }
       }
     ]
