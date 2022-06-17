@@ -5,4 +5,4 @@ export interface ResponseDolar {
   fecha: string;
   recorrido: string;
   agencia: number;
-};
+}

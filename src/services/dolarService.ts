@@ -4,6 +4,4 @@
 
 import api from './api';
 
-export const getDolars = (): any => {
-  return api.get('', { type: 'valoresprincipales' });
-};
+export const getDolars = (): any => api.get('', {type: 'valoresprincipales'});

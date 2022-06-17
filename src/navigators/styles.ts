@@ -1,10 +1,8 @@
 import {StyleSheet} from 'react-native';
 
-import {WHITE} from '@constants/colors';
-
 const styles = StyleSheet.create({
-  text: {
-    color: WHITE,
+  drawerTitle: {
+    fontSize: 20,
   },
 });
 

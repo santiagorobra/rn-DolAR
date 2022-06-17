@@ -1,6 +1,6 @@
 enum Routes {
   Drawer = 'Drawer',
-  Home = 'Home'
+  Home = 'Home',
 }
 
 export default Routes;

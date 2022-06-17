@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
-import { BACKGROUND_LIST, INCREMENT, WHITE } from '@constants/colors';
+import {BACKGROUND_LIST, INCREMENT} from '@constants/colors';
 
 const styles = StyleSheet.create({
   card: {
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginVertical: 5,
     paddingHorizontal: 25,
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   headerCard: {
     justifyContent: 'center',
@@ -22,16 +22,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginVertical: 5
+    marginVertical: 5,
   },
   statusQuote: {
     color: INCREMENT,
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
   },
   text: {
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
 });
 
 export default styles;

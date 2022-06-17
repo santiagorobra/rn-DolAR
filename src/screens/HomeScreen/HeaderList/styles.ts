@@ -1,24 +1,24 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   subHeader: {
-    marginVertical: 10
+    marginVertical: 10,
   },
   title: {
-    fontSize: 30
+    fontSize: 30,
   },
   subtitle: {
-    fontSize: 18
+    fontSize: 18,
   },
   date: {
     fontSize: 20,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default styles;

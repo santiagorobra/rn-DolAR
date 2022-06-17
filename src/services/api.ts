@@ -1,4 +1,4 @@
-import { create } from 'apisauce'
+import {create} from 'apisauce';
 import Config from 'react-native-config';
 
 const APPLICATION_JSON = 'application/json';
@@ -10,7 +10,7 @@ const api = create({
     Accept: APPLICATION_JSON,
     [CONTENT_TYPE]: APPLICATION_JSON,
   },
-  timeout: 30000
+  timeout: 30000,
 });
 
 export default api;
