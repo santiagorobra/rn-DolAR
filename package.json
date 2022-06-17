@@ -67,6 +67,13 @@
       "pre-commit": "lint-staged"
     }
   },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "yarn lint:fix --quiet",
+      "git add"
+    ]
+  },
   "resolutions": {
     "@types/react": "^17"
   },
