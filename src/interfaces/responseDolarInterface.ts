@@ -1,4 +1,4 @@
-export interface ResponseDolar {
+export interface ResponseDollar {
   nombre: string;
   compra: string;
   venta: string;

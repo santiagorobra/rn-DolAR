@@ -14,12 +14,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const App = () => (
-  <Provider store={store}>
-    <SafeAreaView style={styles.container}>
-      <Navigator />
-    </SafeAreaView>
-  </Provider>
-);
+function App() {
+  return (
+    <Provider store={store}>
+      <SafeAreaView style={styles.container}>
+        <Navigator />
+      </SafeAreaView>
+    </Provider>
+  );
+}
 
 export default App;

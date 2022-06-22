@@ -5,27 +5,34 @@ import moment from 'moment';
 
 import {keyExtractor} from '@utils/generalUtils';
 import {StateRedux} from '@interfaces/reduxInterface';
-import {getDolars} from '@services/dolarService';
+import {getDollars} from '@services/dollarService';
 import {DARK, WHITE} from '@constants/colors';
-import {setDolars} from '@redux/dolarsRedux';
+import {setDollars} from '@redux/slices/dollarsSlice';
+import {EmptyList} from '@components/EmptyList';
 
 import {HeaderList} from './HeaderList';
 import {RenderItem} from './RenderItem';
-import {EmptyList} from './EmptyList';
 import styles from './styles';
 
 const DATE_FORMAT = 'DD/MM/YYYY HH:mm:ss';
+const TXT_DOLLAR = 'Dolar';
+const TXT_SOYA = 'Soja';
+const TXT_TURIST = 'turista';
 
 const HomeScreen = () => {
   const [lastUpdate, setLastUpdate] = useState('');
   const [refreshing, setRefreshing] = useState(false);
-  const dolars = useSelector((state: StateRedux) => state.dolarsReducer.dolars);
+  const dollars = useSelector((state: StateRedux) => state.dollarsReducer.dollars);
   const dispatch = useDispatch();
 
   const transformResponseData = (data: any) =>
     Object.keys(data)
       .filter(
-        key => data[key].casa.nombre.includes('Dolar') && !data[key].casa.nombre.includes('Soja'),
+        key =>
+          data[key].casa.nombre.includes(TXT_DOLLAR) &&
+          !data[key].casa.nombre.includes(TXT_SOYA) &&
+          !data[key].casa.nombre.includes(TXT_TURIST) &&
+          data[key].casa.nombre !== TXT_DOLLAR,
       )
       .map(key => ({
         ...data[key].casa,
@@ -34,19 +41,19 @@ const HomeScreen = () => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    const {data} = await getDolars();
+    const {data} = await getDollars();
     setRefreshing(false);
     if (data) {
-      dispatch(setDolars(transformResponseData(data)));
+      dispatch(setDollars(transformResponseData(data)));
       setLastUpdate(moment().format(DATE_FORMAT));
     }
   };
 
   useEffect(() => {
     (async () => {
-      const {data} = await getDolars();
+      const {data} = await getDollars();
       if (data) {
-        dispatch(setDolars(transformResponseData(data)));
+        dispatch(setDollars(transformResponseData(data)));
         setLastUpdate(moment().format(DATE_FORMAT));
       }
     })();
@@ -54,7 +61,7 @@ const HomeScreen = () => {
 
   return (
     <FlatList
-      data={dolars}
+      data={dollars}
       style={styles.container}
       renderItem={({item}) => (item.show ? <RenderItem item={item} /> : null)}
       ListHeaderComponent={<HeaderList date={lastUpdate} />}

@@ -1,9 +1,9 @@
-import {Dolar} from './dolarInterface';
+import {Dollar} from './dollarInterface';
 
-export interface DolarSate {
-  dolars: Dolar[];
+export interface DollarSate {
+  dollars: Dollar[];
 }
 
 export interface StateRedux {
-  dolarsReducer: DolarSate;
+  dollarsReducer: DollarSate;
 }

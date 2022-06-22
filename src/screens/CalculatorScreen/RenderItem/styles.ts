@@ -1,17 +1,10 @@
 import {StyleSheet} from 'react-native';
 
-import {BACKGROUND_LIST} from '@constants/colors';
-
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: BACKGROUND_LIST,
-    borderRadius: 20,
-    marginVertical: 5,
-    paddingHorizontal: 25,
+  list: {
     paddingVertical: 10,
   },
-  headerCard: {
-    justifyContent: 'center',
+  headerList: {
     flexDirection: 'row',
   },
   headerText: {

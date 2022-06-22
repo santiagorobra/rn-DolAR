@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import {configureStore} from '@reduxjs/toolkit';
 
-import dolarsReducer from './dolarsRedux';
+import dollarsReducer from './slices/dollarsSlice';
 
 const reducer = combineReducers({
-  dolarsReducer,
+  dollarsReducer,
 });
 
 const store = configureStore({
