@@ -12,10 +12,8 @@ import {GRAY} from '@constants/colors';
 import {RenderItem} from './RenderItem';
 import styles from './styles';
 
-const INITIAL_VALUE = 0;
-
 const CalculatorScreen = () => {
-  const [moneyArg, setMoneyArg] = useState(INITIAL_VALUE);
+  const [moneyArg, setMoneyArg] = useState(0);
   const currenciesState = useSelector((state: StateRedux) => state.currenciesReducer.currencies);
 
   const onChangeText = (preValue: string) => {
@@ -29,15 +27,14 @@ const CalculatorScreen = () => {
       renderItem={({item}) => (item.show ? <RenderItem item={item} moneyArg={moneyArg} /> : null)}
       ListHeaderComponent={
         <>
-          <TextCustom text="Calculá pesos Argentinos a Dolar" style={styles.title} />
           <TextInput
             style={styles.input}
             placeholder="0"
             keyboardType="numeric"
             onChangeText={onChangeText}
-            defaultValue={moneyArg.toString()}
             placeholderTextColor={GRAY}
           />
+          <TextCustom text="Calculá pesos Argentinos a ...." style={styles.title} />
         </>
       }
       ListEmptyComponent={EmptyList}
