@@ -1,12 +1,21 @@
 import React from 'react';
 
-import {NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import {DARK} from '@constants/colors';
 
 import DrawerMenu from './DrawerMenu';
 
+const navTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: DARK,
+  },
+};
+
 function Navigator() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navTheme}>
       <DrawerMenu />
     </NavigationContainer>
   );

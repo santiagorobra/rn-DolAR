@@ -26,16 +26,18 @@ const CalculatorScreen = () => {
       style={styles.container}
       renderItem={({item}) => (item.show ? <RenderItem item={item} moneyArg={moneyArg} /> : null)}
       ListHeaderComponent={
-        <>
-          <TextInput
-            style={styles.input}
-            placeholder="0"
-            keyboardType="numeric"
-            onChangeText={onChangeText}
-            placeholderTextColor={GRAY}
-          />
-          <TextCustom text="Calculá pesos Argentinos a ...." style={styles.title} />
-        </>
+        currenciesState.length ? (
+          <>
+            <TextInput
+              style={styles.input}
+              placeholder="0"
+              keyboardType="numeric"
+              onChangeText={onChangeText}
+              placeholderTextColor={GRAY}
+            />
+            <TextCustom text="Calculá pesos Argentinos a ...." style={styles.title} />
+          </>
+        ) : null
       }
       ListEmptyComponent={EmptyList}
       showsVerticalScrollIndicator={false}

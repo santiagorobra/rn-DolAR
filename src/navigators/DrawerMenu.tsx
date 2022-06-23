@@ -11,6 +11,7 @@ import Config from 'react-native-config';
 import Routes from '@constants/routes';
 import {BACKGROUND_LIST, DARK, RED, WHITE} from '@constants/colors';
 import {TextCustom} from '@components/TextCustom';
+import {EmptyList} from '@components/EmptyList';
 import {StateRedux} from '@interfaces/reduxInterface';
 import {displayCurrency} from '@redux/slices/currenciesSlice';
 
@@ -35,23 +36,28 @@ const CustomDrawerContent = () => {
   const dispatch = useDispatch();
   return (
     <DrawerContentScrollView style={{backgroundColor: BACKGROUND_LIST}}>
-      <DrawerItem
-        label="Filtrá las cotizaciones"
-        inactiveTintColor={WHITE}
-        labelStyle={styles.drawerTitle}
-        onPress={() => {}}
-      />
-      {!!currenciesState.length &&
-        currenciesState.map(({data}) =>
-          data.map(({name, show, id}) => (
-            <DrawerItem
-              key={`-${name}`}
-              label={name}
-              inactiveTintColor={show ? WHITE : RED}
-              onPress={() => dispatch(displayCurrency(id))}
-            />
-          )),
-        )}
+      {currenciesState.length ? (
+        <>
+          <DrawerItem
+            label="Filtrá las cotizaciones"
+            inactiveTintColor={WHITE}
+            labelStyle={styles.drawerTitle}
+            onPress={() => {}}
+          />
+          {currenciesState.map(({data}) =>
+            data.map(({name, show, id}) => (
+              <DrawerItem
+                key={`-${name}`}
+                label={name}
+                inactiveTintColor={show ? WHITE : RED}
+                onPress={() => dispatch(displayCurrency(id))}
+              />
+            )),
+          )}
+        </>
+      ) : (
+        <EmptyList />
+      )}
     </DrawerContentScrollView>
   );
 };

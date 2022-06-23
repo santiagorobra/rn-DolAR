@@ -8,8 +8,9 @@ import {StateRedux} from '@interfaces/reduxInterface';
 import {Currencies, SectionListCurrencies} from '@interfaces/currenciesInterface';
 import {getCurrencies} from '@services/currenciesService';
 import {DARK, WHITE} from '@constants/colors';
-import {EmptyList} from '@components/EmptyList';
 import {TextCustom} from '@components/TextCustom';
+import SkeletonCard from '@components/SkeletonComponent';
+import {EmptyList} from '@components/EmptyList';
 import {setCurrencies} from '@redux/slices/currenciesSlice';
 
 import {HeaderList} from './HeaderList';
@@ -20,6 +21,7 @@ const DATE_FORMAT = 'DD/MM/YYYY HH:mm:ss';
 
 const HomeScreen = () => {
   const [lastUpdate, setLastUpdate] = useState('');
+  const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const currenciesState = useSelector((state: StateRedux) => state.currenciesReducer.currencies);
   const dispatch = useDispatch();
@@ -35,20 +37,32 @@ const HomeScreen = () => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    const {data} = await getCurrencies();
-    setRefreshing(false);
-    if (data) {
-      dispatch(setCurrencies(transformResponseData(data)));
-      setLastUpdate(moment().format(DATE_FORMAT));
+    try {
+      const {data} = await getCurrencies();
+      if (data) {
+        dispatch(setCurrencies(transformResponseData(data)));
+        setLastUpdate(moment().format(DATE_FORMAT));
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRefreshing(false);
     }
   };
 
   useEffect(() => {
     (async () => {
-      const {data} = await getCurrencies();
-      if (data) {
-        dispatch(setCurrencies(transformResponseData(data)));
-        setLastUpdate(moment().format(DATE_FORMAT));
+      setLoading(true);
+      try {
+        const {data} = await getCurrencies();
+        if (data) {
+          dispatch(setCurrencies(transformResponseData(data)));
+          setLastUpdate(moment().format(DATE_FORMAT));
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
     })();
   }, [dispatch]);
@@ -71,7 +85,17 @@ const HomeScreen = () => {
           onRefresh={onRefresh}
         />
       }
-      ListEmptyComponent={EmptyList}
+      ListEmptyComponent={
+        loading ? (
+          <>
+            {[1, 2, 3, 4, 5].map(i => (
+              <SkeletonCard key={`Skeleton-${i}`} />
+            ))}
+          </>
+        ) : (
+          <EmptyList />
+        )
+      }
       showsVerticalScrollIndicator={false}
       keyExtractor={keyExtractor}
     />
