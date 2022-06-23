@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 20,
-    height: 40,
+    height: 55,
     backgroundColor: WHITE,
     borderRadius: 10,
     paddingHorizontal: 10,

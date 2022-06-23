@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
     backgroundColor: DARK,
     paddingHorizontal: 10,
   },
-  text: {
+  titleSection: {
+    fontSize: 20,
     color: WHITE,
   },
 });

@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
-import {FlatList, TextInput} from 'react-native';
+import {SectionList, TextInput} from 'react-native';
 import {useSelector} from 'react-redux';
 
 import {keyExtractor} from '@utils/generalUtils';
+import {validateIsNumber} from '@utils/money';
 import {StateRedux} from '@interfaces/reduxInterface';
 import {TextCustom} from '@components/TextCustom';
 import {EmptyList} from '@components/EmptyList';
-
 import {GRAY} from '@constants/colors';
+
 import {RenderItem} from './RenderItem';
 import styles from './styles';
 
@@ -15,16 +16,15 @@ const INITIAL_VALUE = 0;
 
 const CalculatorScreen = () => {
   const [moneyArg, setMoneyArg] = useState(INITIAL_VALUE);
-  const dollars = useSelector((state: StateRedux) => state.dollarsReducer.dollars);
+  const currenciesState = useSelector((state: StateRedux) => state.currenciesReducer.currencies);
 
   const onChangeText = (preValue: string) => {
-    const newValue = parseInt(preValue, 10);
-    setMoneyArg(Number.isNaN(newValue) ? INITIAL_VALUE : newValue);
+    setMoneyArg(validateIsNumber(preValue));
   };
 
   return (
-    <FlatList
-      data={dollars}
+    <SectionList
+      sections={currenciesState}
       style={styles.container}
       renderItem={({item}) => (item.show ? <RenderItem item={item} moneyArg={moneyArg} /> : null)}
       ListHeaderComponent={

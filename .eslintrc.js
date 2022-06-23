@@ -33,6 +33,7 @@ module.exports = {
     {
       files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
       rules: {
+        'import/no-extraneous-dependencies': ['error', {devDependencies: true}],
         '@typescript-eslint/no-shadow': ['error'],
         'array-callback-return': 'off',
         'no-param-reassign': 0,

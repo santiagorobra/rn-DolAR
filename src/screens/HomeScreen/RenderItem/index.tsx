@@ -2,23 +2,24 @@ import React from 'react';
 import {View} from 'react-native';
 
 import {TextCustom} from '@components/TextCustom';
-import {Dollar} from '@interfaces/dollarInterface';
+import {Quotation} from '@interfaces/currenciesInterface';
+import {formatMoney} from '@utils/money';
 
 import styles from './styles';
 
-export const RenderItem = ({item: {nombre, compra, venta}}: {item: Dollar}) => (
+export const RenderItem = ({item: {name, purchase, sale}}: {item: Quotation}) => (
   <View style={styles.card}>
     <View style={styles.headerCard}>
-      <TextCustom text={nombre} style={styles.headerText} />
+      <TextCustom text={name} style={styles.headerText} />
     </View>
     <View style={styles.bodyCard}>
       <View>
         <TextCustom text="Compra" style={styles.text} />
-        <TextCustom text={compra} style={styles.text} />
+        <TextCustom text={formatMoney(purchase)} style={styles.text} />
       </View>
       <View>
         <TextCustom text="Venta" style={styles.text} />
-        <TextCustom text={venta} style={styles.text} />
+        <TextCustom text={formatMoney(sale)} style={styles.text} />
       </View>
     </View>
   </View>

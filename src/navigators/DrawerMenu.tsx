@@ -12,7 +12,7 @@ import Routes from '@constants/routes';
 import {BACKGROUND_LIST, DARK, RED, WHITE} from '@constants/colors';
 import {TextCustom} from '@components/TextCustom';
 import {StateRedux} from '@interfaces/reduxInterface';
-import {displayDollar} from '@redux/slices/dollarsSlice';
+import {displayCurrency} from '@redux/slices/currenciesSlice';
 
 import HomeTabs from './HomeTabs';
 import styles from './styles';
@@ -31,7 +31,7 @@ const drawerOptions: DrawerNavigationOptions = {
 };
 
 const CustomDrawerContent = () => {
-  const dollars = useSelector((state: StateRedux) => state.dollarsReducer.dollars);
+  const currenciesState = useSelector((state: StateRedux) => state.currenciesReducer.currencies);
   const dispatch = useDispatch();
   return (
     <DrawerContentScrollView style={{backgroundColor: BACKGROUND_LIST}}>
@@ -41,15 +41,17 @@ const CustomDrawerContent = () => {
         labelStyle={styles.drawerTitle}
         onPress={() => {}}
       />
-      {!!dollars.length &&
-        dollars.map(({nombre, show}) => (
-          <DrawerItem
-            key={`-${nombre}`}
-            label={nombre}
-            inactiveTintColor={show ? WHITE : RED}
-            onPress={() => dispatch(displayDollar(nombre))}
-          />
-        ))}
+      {!!currenciesState.length &&
+        currenciesState.map(({data}) =>
+          data.map(({name, show, id}) => (
+            <DrawerItem
+              key={`-${name}`}
+              label={name}
+              inactiveTintColor={show ? WHITE : RED}
+              onPress={() => dispatch(displayCurrency(id))}
+            />
+          )),
+        )}
     </DrawerContentScrollView>
   );
 };

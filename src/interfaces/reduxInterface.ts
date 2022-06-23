@@ -1,9 +1,9 @@
-import {Dollar} from './dollarInterface';
+import {SectionListCurrencies} from './currenciesInterface';
 
-export interface DollarSate {
-  dollars: Dollar[];
+export interface CurrenciesSate {
+  currencies: SectionListCurrencies;
 }
 
 export interface StateRedux {
-  dollarsReducer: DollarSate;
+  currenciesReducer: CurrenciesSate;
 }

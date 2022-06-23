@@ -1,1 +1,2 @@
-export const keyExtractor = ({nombre}: {nombre: string}, index = 0) => `${nombre}-${index}`;
+export const keyExtractor = ({name, id}: {name: string; id: number}, index = 0) =>
+  `${id}-${name}-${index}`;

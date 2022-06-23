@@ -14,6 +14,10 @@ const styles = StyleSheet.create({
   },
 });
 
+if (__DEV__) {
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
+
 function App() {
   return (
     <Provider store={store}>

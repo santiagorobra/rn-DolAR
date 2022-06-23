@@ -2,26 +2,27 @@ import React from 'react';
 import {View} from 'react-native';
 
 import {TextCustom} from '@components/TextCustom';
-import {Dollar} from '@interfaces/dollarInterface';
+import {Quotation} from '@interfaces/currenciesInterface';
+import {formatMoney, validateIsNumber} from '@utils/money';
 
 import styles from './styles';
 
 export const RenderItem = ({
-  item: {nombre, compra},
+  item: {name, purchase},
   moneyArg,
 }: {
-  item: Dollar;
+  item: Quotation;
   moneyArg: number;
 }) => {
-  const value = (moneyArg / parseInt(compra, 10)).toFixed(3).toString();
+  const value = moneyArg / (validateIsNumber(purchase) || 1);
   return (
     <View style={styles.list}>
       <View style={styles.headerList}>
-        <TextCustom text={nombre} style={styles.headerText} />
+        <TextCustom text={name} style={styles.headerText} />
       </View>
       <View style={styles.bodyCard}>
         <View>
-          <TextCustom text={value} style={styles.text} />
+          <TextCustom text={formatMoney(value)} style={styles.text} />
         </View>
       </View>
     </View>

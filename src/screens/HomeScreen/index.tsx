@@ -1,69 +1,66 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, RefreshControl} from 'react-native';
+import {RefreshControl, SectionList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 
 import {keyExtractor} from '@utils/generalUtils';
 import {StateRedux} from '@interfaces/reduxInterface';
-import {getDollars} from '@services/dollarService';
+import {Currencies, SectionListCurrencies} from '@interfaces/currenciesInterface';
+import {getCurrencies} from '@services/currenciesService';
 import {DARK, WHITE} from '@constants/colors';
-import {setDollars} from '@redux/slices/dollarsSlice';
 import {EmptyList} from '@components/EmptyList';
+import {TextCustom} from '@components/TextCustom';
+import {setCurrencies} from '@redux/slices/currenciesSlice';
 
 import {HeaderList} from './HeaderList';
 import {RenderItem} from './RenderItem';
 import styles from './styles';
 
 const DATE_FORMAT = 'DD/MM/YYYY HH:mm:ss';
-const TXT_DOLLAR = 'Dolar';
-const TXT_SOYA = 'Soja';
-const TXT_TURIST = 'turista';
 
 const HomeScreen = () => {
   const [lastUpdate, setLastUpdate] = useState('');
   const [refreshing, setRefreshing] = useState(false);
-  const dollars = useSelector((state: StateRedux) => state.dollarsReducer.dollars);
+  const currenciesState = useSelector((state: StateRedux) => state.currenciesReducer.currencies);
   const dispatch = useDispatch();
 
-  const transformResponseData = (data: any) =>
-    Object.keys(data)
-      .filter(
-        key =>
-          data[key].casa.nombre.includes(TXT_DOLLAR) &&
-          !data[key].casa.nombre.includes(TXT_SOYA) &&
-          !data[key].casa.nombre.includes(TXT_TURIST) &&
-          data[key].casa.nombre !== TXT_DOLLAR,
-      )
-      .map(key => ({
-        ...data[key].casa,
+  const transformResponseData = (response: Currencies): SectionListCurrencies =>
+    response.map(({title, currencies}) => ({
+      title,
+      data: currencies.map(currency => ({
+        ...{...currency},
         show: true,
-      }));
+      })),
+    }));
 
   const onRefresh = async () => {
     setRefreshing(true);
-    const {data} = await getDollars();
+    const {data} = await getCurrencies();
     setRefreshing(false);
     if (data) {
-      dispatch(setDollars(transformResponseData(data)));
+      dispatch(setCurrencies(transformResponseData(data)));
       setLastUpdate(moment().format(DATE_FORMAT));
     }
   };
 
   useEffect(() => {
     (async () => {
-      const {data} = await getDollars();
+      const {data} = await getCurrencies();
       if (data) {
-        dispatch(setDollars(transformResponseData(data)));
+        dispatch(setCurrencies(transformResponseData(data)));
         setLastUpdate(moment().format(DATE_FORMAT));
       }
     })();
   }, [dispatch]);
 
   return (
-    <FlatList
-      data={dollars}
+    <SectionList
+      sections={currenciesState}
       style={styles.container}
       renderItem={({item}) => (item.show ? <RenderItem item={item} /> : null)}
+      renderSectionHeader={({section: {title}}) => (
+        <TextCustom style={styles.titleSection} text={title} />
+      )}
       ListHeaderComponent={<HeaderList date={lastUpdate} />}
       refreshControl={
         <RefreshControl
