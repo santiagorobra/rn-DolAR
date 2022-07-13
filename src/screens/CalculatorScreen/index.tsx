@@ -67,7 +67,7 @@ const CalculatorScreen = () => {
   }, [refreshing]);
 
   useEffect(() => {
-    if (currenciesState.length) {
+    if (currenciesState.length && !dropDownPickerValue) {
       setDropDownPickerItemsAll(
         currenciesState.flatMap(({data}) =>
           data.map(({name, purchase}: Quotation) => ({
@@ -77,7 +77,7 @@ const CalculatorScreen = () => {
         ),
       );
     }
-  }, [currenciesState]);
+  }, [currenciesState, dropDownPickerValue]);
 
   return (
     <View style={styles.container}>
