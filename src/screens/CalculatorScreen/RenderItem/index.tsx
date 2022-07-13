@@ -7,13 +7,12 @@ import {formatMoney, validateIsNumber} from '@utils/money';
 
 import styles from './styles';
 
-export const RenderItem = ({
-  item: {name, purchase},
-  moneyArg,
-}: {
+interface Props {
   item: Quotation;
   moneyArg: number;
-}) => {
+}
+
+export const RenderItem = ({item: {name, purchase}, moneyArg}: Props) => {
   const value = moneyArg / (validateIsNumber(purchase) || 1);
   return (
     <View style={styles.list}>

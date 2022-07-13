@@ -10,7 +10,7 @@ const api = create({
     Accept: APPLICATION_JSON,
     [CONTENT_TYPE]: APPLICATION_JSON,
   },
-  timeout: 30000,
+  timeout: 15000,
 });
 
 export default api;

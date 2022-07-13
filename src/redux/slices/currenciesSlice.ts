@@ -22,7 +22,10 @@ const currenciesSlice = createSlice({
       for (const [index, iterator] of state.currencies.entries()) {
         const objIndex = iterator.data.findIndex(quotation => quotation.id === action.payload);
         if (objIndex !== -1) {
-          if (state.currencies[index].data.filter(quotation => quotation.show).length > 1) {
+          if (
+            state.currencies.flatMap(({data}) => data).filter(quotation => quotation.show).length >
+            1
+          ) {
             state.currencies[index].data[objIndex].show =
               !state.currencies[index].data[objIndex].show;
           } else {

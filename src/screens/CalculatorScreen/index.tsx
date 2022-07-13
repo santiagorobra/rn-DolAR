@@ -35,7 +35,7 @@ const CalculatorScreen = () => {
               onChangeText={onChangeText}
               placeholderTextColor={GRAY}
             />
-            <TextCustom text="Calculá pesos Argentinos a ...." style={styles.title} />
+            <TextCustom text="Compra: Calculá pesos Argentinos a ...." style={styles.title} />
           </>
         ) : null
       }

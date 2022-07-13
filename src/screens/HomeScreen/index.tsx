@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 
 import {keyExtractor} from '@utils/generalUtils';
+import {filterQuotations} from '@utils/money';
 import {StateRedux} from '@interfaces/reduxInterface';
 import {Currencies, SectionListCurrencies} from '@interfaces/currenciesInterface';
 import {getCurrencies} from '@services/currenciesService';
@@ -13,6 +14,7 @@ import SkeletonCard from '@components/SkeletonComponent';
 import {EmptyList} from '@components/EmptyList';
 import {setCurrencies} from '@redux/slices/currenciesSlice';
 
+import {CURRENCIES_MOCK} from 'src/mocks/currencies';
 import {HeaderList} from './HeaderList';
 import {RenderItem} from './RenderItem';
 import styles from './styles';
@@ -62,6 +64,9 @@ const HomeScreen = () => {
       } catch (error) {
         console.log(error);
       } finally {
+        if (__DEV__ && currenciesState.length === 0) {
+          dispatch(setCurrencies(transformResponseData(CURRENCIES_MOCK)));
+        }
         setLoading(false);
       }
     })();
@@ -72,9 +77,9 @@ const HomeScreen = () => {
       sections={currenciesState}
       style={styles.container}
       renderItem={({item}) => (item.show ? <RenderItem item={item} /> : null)}
-      renderSectionHeader={({section: {title}}) => (
-        <TextCustom style={styles.titleSection} text={title} />
-      )}
+      renderSectionHeader={({section: {title, data}}) =>
+        filterQuotations(data) ? <TextCustom style={styles.titleSection} text={title} /> : null
+      }
       ListHeaderComponent={<HeaderList date={lastUpdate} />}
       refreshControl={
         <RefreshControl
@@ -88,7 +93,7 @@ const HomeScreen = () => {
       ListEmptyComponent={
         loading ? (
           <>
-            {[1, 2, 3, 4, 5].map(i => (
+            {[...Array(5).keys()].map(i => (
               <SkeletonCard key={`Skeleton-${i}`} />
             ))}
           </>
