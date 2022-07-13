@@ -4,7 +4,7 @@ import {DARK, WHITE} from '@constants/colors';
 
 const COMMOM_STYLE_INPUT = {
   fontSize: 20,
-  height: 50,
+  height: 55,
   backgroundColor: WHITE,
   borderRadius: 8,
   paddingHorizontal: 10,

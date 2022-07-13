@@ -12,7 +12,7 @@ import {DARK, WHITE} from '@constants/colors';
 import {TextCustom} from '@components/TextCustom';
 import SkeletonCard from '@components/SkeletonComponent';
 import {EmptyList} from '@components/EmptyList';
-import {setCurrencies} from '@redux/slices/currenciesSlice';
+import {setCurrencies, setRefreshing} from '@redux/slices/currenciesSlice';
 
 import {CURRENCIES_MOCK} from 'src/mocks/currencies';
 import {HeaderList} from './HeaderList';
@@ -24,8 +24,8 @@ const DATE_FORMAT = 'DD/MM/YYYY HH:mm:ss';
 const HomeScreen = () => {
   const [lastUpdate, setLastUpdate] = useState('');
   const [loading, setLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const currenciesState = useSelector((state: StateRedux) => state.currenciesReducer.currencies);
+  const refreshing = useSelector((state: StateRedux) => state.currenciesReducer.refreshing);
   const dispatch = useDispatch();
 
   const transformResponseData = (response: Currencies): SectionListCurrencies =>
@@ -40,8 +40,8 @@ const HomeScreen = () => {
     }));
 
   const onRefresh = async () => {
-    setRefreshing(true);
     try {
+      dispatch(setRefreshing(true));
       const {data} = await getCurrencies();
       if (data) {
         dispatch(setCurrencies(transformResponseData(data)));
@@ -50,7 +50,7 @@ const HomeScreen = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setRefreshing(false);
+      dispatch(setRefreshing(false));
     }
   };
 

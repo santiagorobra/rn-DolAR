@@ -16,7 +16,11 @@ const COMMOM_TABS_OPTIONS: BottomTabNavigationOptions = {
   headerShown: false,
   tabBarActiveTintColor: WHITE,
   tabBarInactiveTintColor: GRAY,
+  tabBarItemStyle: {
+    marginBottom: 12,
+  },
   tabBarStyle: {
+    height: 70,
     borderTopColor: WHITE,
     backgroundColor: DARK,
   },

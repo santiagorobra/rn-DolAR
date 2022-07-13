@@ -6,6 +6,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import {StateRedux} from '@interfaces/reduxInterface';
 import {Quotation} from '@interfaces/currenciesInterface';
 import {TextCustom} from '@components/TextCustom';
+import {EmptyList} from '@components/EmptyList';
 import {validateIsNumber} from '@utils/money';
 import {DARK, GRAY} from '@constants/colors';
 
@@ -23,6 +24,7 @@ const CalculatorScreen = () => {
 
   const [currentCurrency, setCurrentCurrency] = useState(1);
   const currenciesState = useSelector((state: StateRedux) => state.currenciesReducer.currencies);
+  const refreshing = useSelector((state: StateRedux) => state.currenciesReducer.refreshing);
 
   const [dropDownPickerValue, setDropDownPickerValue] = useState(null);
   const [openDropDownPicker, setOpenDropDownPicker] = useState(false);
@@ -30,7 +32,6 @@ const CalculatorScreen = () => {
 
   const handleAmountArgChange = (amountInputArg: string) => {
     const toNumberAmountInputArg = validateIsNumber(amountInputArg);
-    console.log(toNumberAmountInputArg);
     if (toNumberAmountInputArg) {
       setAmountAnyone(toNumberAmountInputArg / currentCurrency);
       setAmountArg(toNumberAmountInputArg);
@@ -58,65 +59,77 @@ const CalculatorScreen = () => {
   };
 
   useEffect(() => {
+    if (refreshing) {
+      setOpenDropDownPicker(false);
+      setDropDownPickerValue(null);
+      setDropDownPickerItemsAll([]);
+    }
+  }, [refreshing]);
+
+  useEffect(() => {
     if (currenciesState.length) {
       setDropDownPickerItemsAll(
-        currenciesState
-          .map(({data}) =>
-            data.map(({name, purchase}: Quotation) => ({
-              label: `${name} - ${purchase} pesos`,
-              value: purchase,
-            })),
-          )
-          .reduce((prev, next) => prev.concat(next)),
+        currenciesState.flatMap(({data}) =>
+          data.map(({name, purchase}: Quotation) => ({
+            label: `${name} - ${purchase} pesos`,
+            value: purchase,
+          })),
+        ),
       );
     }
   }, [currenciesState]);
 
   return (
     <View style={styles.container}>
-      <TextCustom
-        text="Para la Compra: Calculá pesos Argentinos a cualquier divisa o viceversa"
-        style={styles.title}
-      />
-      <TextInput
-        style={styles.label}
-        placeholder="Arg"
-        editable={false}
-        selectTextOnFocus={false}
-        placeholderTextColor={DARK}
-      />
-      {!!dropDownPickerValue && (
-        <TextInput
-          style={styles.input}
-          placeholder="0"
-          keyboardType="numeric"
-          placeholderTextColor={GRAY}
-          value={amountArg.toString().replace('.', ',')}
-          onChangeText={handleAmountArgChange}
-        />
-      )}
-      {!!dropDownPickerItemsAll.length && (
-        <DropDownPicker
-          style={styles.label}
-          onChangeValue={onChangeValueDropDown}
-          placeholder="Selecciona la divisa"
-          open={openDropDownPicker}
-          value={dropDownPickerValue}
-          items={dropDownPickerItemsAll}
-          setOpen={setOpenDropDownPicker}
-          setValue={setDropDownPickerValue}
-          setItems={setDropDownPickerItemsAll}
-        />
-      )}
-      {!!dropDownPickerValue && (
-        <TextInput
-          style={styles.input}
-          placeholder="0"
-          keyboardType="numeric"
-          placeholderTextColor={GRAY}
-          value={amountAnyone.toString().replace('.', ',')}
-          onChangeText={handleAmountAnyoneChange}
-        />
+      {!currenciesState.length ? (
+        <EmptyList />
+      ) : (
+        <>
+          <TextCustom
+            text="Para la Compra: Calculá pesos Argentinos a cualquier divisa o viceversa"
+            style={styles.title}
+          />
+          <TextInput
+            style={styles.label}
+            placeholder="Arg"
+            editable={false}
+            selectTextOnFocus={false}
+            placeholderTextColor={DARK}
+          />
+          {!!dropDownPickerValue && (
+            <TextInput
+              style={styles.input}
+              placeholder="0"
+              keyboardType="numeric"
+              placeholderTextColor={GRAY}
+              value={!amountArg ? '' : amountArg.toString().replace('.', ',')}
+              onChangeText={handleAmountArgChange}
+            />
+          )}
+          {!!dropDownPickerItemsAll.length && (
+            <DropDownPicker
+              style={styles.label}
+              onChangeValue={onChangeValueDropDown}
+              placeholder="Seleccioná una divisa"
+              open={openDropDownPicker}
+              value={dropDownPickerValue}
+              items={dropDownPickerItemsAll}
+              setOpen={setOpenDropDownPicker}
+              setValue={setDropDownPickerValue}
+              setItems={setDropDownPickerItemsAll}
+            />
+          )}
+          {!!dropDownPickerValue && (
+            <TextInput
+              style={styles.input}
+              placeholder="0"
+              keyboardType="numeric"
+              placeholderTextColor={GRAY}
+              value={!amountAnyone ? '' : amountAnyone.toString().replace('.', ',')}
+              onChangeText={handleAmountAnyoneChange}
+            />
+          )}
+        </>
       )}
     </View>
   );
