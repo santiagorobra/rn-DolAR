@@ -3,7 +3,7 @@ import {BottomTabNavigationOptions, createBottomTabNavigator} from '@react-navig
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Routes from '@constants/routes';
-import {DARK, WHITE} from '@constants/colors';
+import {DARK, GRAY, GREEN, WHITE, YELLOW} from '@constants/colors';
 
 import CalculatorScreen from '@screens/CalculatorScreen';
 import HomeStack from './HomeStack';
@@ -11,10 +11,11 @@ import HomeStack from './HomeStack';
 const Tab = createBottomTabNavigator();
 
 const SIZE_ICON = 25;
-const COLOR_ICON = WHITE;
+const INACTIVE_COLOR_ICON = GRAY;
 const COMMOM_TABS_OPTIONS: BottomTabNavigationOptions = {
   headerShown: false,
   tabBarActiveTintColor: WHITE,
+  tabBarInactiveTintColor: GRAY,
   tabBarStyle: {
     borderTopColor: WHITE,
     backgroundColor: DARK,
@@ -23,13 +24,17 @@ const COMMOM_TABS_OPTIONS: BottomTabNavigationOptions = {
 
 const HomeTabsOptions: BottomTabNavigationOptions = {
   title: 'Cotizaciones',
-  tabBarIcon: () => <Icon name="cash" size={SIZE_ICON} color={COLOR_ICON} />,
+  tabBarIcon: ({focused}) => (
+    <Icon name="cash" size={SIZE_ICON} color={focused ? GREEN : INACTIVE_COLOR_ICON} />
+  ),
   ...COMMOM_TABS_OPTIONS,
 };
 
 const CalculatorOptions: BottomTabNavigationOptions = {
   title: 'Calculadora',
-  tabBarIcon: () => <Icon name="calculator" size={SIZE_ICON} color={COLOR_ICON} />,
+  tabBarIcon: ({focused}) => (
+    <Icon name="calculator" size={SIZE_ICON} color={focused ? YELLOW : INACTIVE_COLOR_ICON} />
+  ),
   ...COMMOM_TABS_OPTIONS,
 };
 

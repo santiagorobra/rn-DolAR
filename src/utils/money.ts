@@ -9,6 +9,12 @@ export const validateIsNumber = (price: string | number): number => {
 
 export const formatMoney = (price: string | number): string =>
   validateIsNumber(price)
+    .toString()
+    .replace('.', ',')
+    .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+export const formatMoneyFix = (price: string | number): string =>
+  validateIsNumber(price)
     .toFixed(3)
     .replace('.', ',')
     .replace(/\B(?=(\d{3})+(?!\d))/g, '.');

@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 
 import {keyExtractor} from '@utils/generalUtils';
-import {filterQuotations} from '@utils/money';
+import {filterQuotations, formatMoney} from '@utils/money';
 import {StateRedux} from '@interfaces/reduxInterface';
 import {Currencies, SectionListCurrencies} from '@interfaces/currenciesInterface';
 import {getCurrencies} from '@services/currenciesService';
@@ -33,6 +33,8 @@ const HomeScreen = () => {
       title,
       data: currencies.map(currency => ({
         ...{...currency},
+        purchase: formatMoney(currency.purchase),
+        sale: formatMoney(currency.sale),
         show: true,
       })),
     }));
