@@ -1,5 +1,5 @@
 enum Routes {
-  Drawer = 'Drawer',
+  HomeDrawer = 'HomeDrawer',
   HomeTabs = 'HomeTabs',
   Home = 'Home',
   Calculator = 'Calculator',

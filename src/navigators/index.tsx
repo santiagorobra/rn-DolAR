@@ -3,7 +3,7 @@ import React from 'react';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {DARK} from '@constants/colors';
 
-import DrawerMenu from './DrawerMenu';
+import HomeTabs from './HomeTabs';
 
 const navTheme = {
   ...DefaultTheme,
@@ -16,7 +16,7 @@ const navTheme = {
 function Navigator() {
   return (
     <NavigationContainer theme={navTheme}>
-      <DrawerMenu />
+      <HomeTabs />
     </NavigationContainer>
   );
 }

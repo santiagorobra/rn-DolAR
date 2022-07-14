@@ -6,7 +6,7 @@ import Routes from '@constants/routes';
 import {DARK, GRAY, GREEN, WHITE, YELLOW} from '@constants/colors';
 
 import CalculatorScreen from '@screens/CalculatorScreen';
-import HomeStack from './HomeStack';
+import HomeDrawer from './HomeDrawer';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,8 +40,8 @@ const CalculatorOptions: BottomTabNavigationOptions = {
 
 function HomeTabs() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name={Routes.HomeTabs} component={HomeStack} options={HomeTabsOptions} />
+    <Tab.Navigator initialRouteName={Routes.HomeDrawer}>
+      <Tab.Screen name={Routes.HomeDrawer} component={HomeDrawer} options={HomeTabsOptions} />
       <Tab.Screen
         name={Routes.Calculator}
         component={CalculatorScreen}

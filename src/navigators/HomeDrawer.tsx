@@ -14,20 +14,23 @@ import {TextCustom} from '@components/TextCustom';
 import {EmptyList} from '@components/EmptyList';
 import {StateRedux} from '@interfaces/reduxInterface';
 import {displayCurrency} from '@redux/slices/currenciesSlice';
+import HomeScreen from '@screens/HomeScreen';
 
-import HomeTabs from './HomeTabs';
 import styles from './styles';
 
 const Drawer = createDrawerNavigator();
 
 const drawerOptions: DrawerNavigationOptions = {
-  drawerType: 'back',
+  drawerType: 'front',
   headerTintColor: WHITE,
   headerShadowVisible: false,
   headerStyle: {
     backgroundColor: DARK,
   },
   title: '',
+  headerRightContainerStyle: {
+    paddingRight: 15,
+  },
   headerRight: () => <TextCustom text={`Beta ${Config.VERSION}`} />,
 };
 
@@ -62,12 +65,15 @@ const CustomDrawerContent = () => {
   );
 };
 
-function DrawerMenu() {
+function HomeDrawer() {
   return (
-    <Drawer.Navigator screenOptions={drawerOptions} drawerContent={CustomDrawerContent}>
-      <Drawer.Screen name={Routes.Drawer} component={HomeTabs} />
+    <Drawer.Navigator
+      initialRouteName={Routes.Home}
+      screenOptions={drawerOptions}
+      drawerContent={CustomDrawerContent}>
+      <Drawer.Screen name={Routes.Home} component={HomeScreen} />
     </Drawer.Navigator>
   );
 }
 
-export default DrawerMenu;
+export default HomeDrawer;
