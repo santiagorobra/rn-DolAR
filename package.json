@@ -8,7 +8,7 @@
     "start": "react-native start",
     "android:release": "cd android && ./gradlew assembleRelease",
     "android:prod:release": "cd android && ./gradlew bundleRelease",
-    "android:open": "open android/app/build/outputs/apk/",
+    "android:open": "open android/app/build/outputs",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint --fix src",

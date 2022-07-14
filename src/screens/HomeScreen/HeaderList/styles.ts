@@ -1,13 +1,14 @@
 import {StyleSheet} from 'react-native';
 
 import {DARK, GRAY, WHITE} from '@constants/colors';
+import {IS_ANDROID} from '@utils/platforms';
 
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 15,
+    marginTop: IS_ANDROID ? 0 : 15,
   },
   subHeader: {
     marginVertical: 10,
