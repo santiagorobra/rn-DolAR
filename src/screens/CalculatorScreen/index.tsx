@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {TextInput, View} from 'react-native';
+import {ScrollView, TextInput} from 'react-native';
 import {useSelector} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Animated, {FlipInXUp} from 'react-native-reanimated';
 
 import {StateRedux} from '@interfaces/reduxInterface';
 import {Quotation} from '@interfaces/currenciesInterface';
 import {TextCustom} from '@components/TextCustom';
 import {EmptyList} from '@components/EmptyList';
 import {validateIsNumber} from '@utils/money';
-import {DARK, GRAY} from '@constants/colors';
+import {GRAY, WHITE} from '@constants/colors';
 
 import styles from './styles';
 
@@ -17,6 +19,11 @@ interface DropDownPickerItems
     label: string;
     value: string;
   }> {}
+
+const SIZE_ICONS = 25;
+const CloseIconComponent = () => <Icon name="close" size={SIZE_ICONS} color={WHITE} />;
+const TickIconComponent = () => <Icon name="checkmark" size={SIZE_ICONS} color={WHITE} />;
+const ArrowDownIconComponent = () => <Icon name="chevron-down" size={SIZE_ICONS} color={WHITE} />;
 
 const CalculatorScreen = () => {
   const [amountArg, setAmountArg] = useState(1);
@@ -54,8 +61,8 @@ const CalculatorScreen = () => {
 
   const onChangeValueDropDown = (preValue: any) => {
     setCurrentCurrency(preValue);
-    setAmountAnyone(preValue);
-    setAmountArg(1 / preValue);
+    setAmountAnyone(1);
+    setAmountArg(preValue);
   };
 
   useEffect(() => {
@@ -80,7 +87,7 @@ const CalculatorScreen = () => {
   }, [currenciesState, dropDownPickerValue]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {!currenciesState.length ? (
         <EmptyList />
       ) : (
@@ -91,24 +98,38 @@ const CalculatorScreen = () => {
           />
           <TextInput
             style={styles.label}
-            placeholder="Arg"
+            placeholder="Pesos Argentinos"
             editable={false}
             selectTextOnFocus={false}
-            placeholderTextColor={DARK}
+            placeholderTextColor={WHITE}
           />
           {!!dropDownPickerValue && (
-            <TextInput
-              style={styles.input}
-              placeholder="0"
-              keyboardType="numeric"
-              placeholderTextColor={GRAY}
-              value={!amountArg ? '' : amountArg.toString().replace('.', ',')}
-              onChangeText={handleAmountArgChange}
-            />
+            <Animated.View entering={FlipInXUp}>
+              <TextInput
+                style={styles.input}
+                placeholder="0"
+                keyboardType="numeric"
+                placeholderTextColor={GRAY}
+                value={!amountArg ? '' : amountArg.toString().replace('.', ',')}
+                onChangeText={handleAmountArgChange}
+              />
+            </Animated.View>
           )}
           {!!dropDownPickerItemsAll.length && (
             <DropDownPicker
               style={styles.label}
+              listMode="MODAL"
+              modalProps={{
+                animationType: 'slide',
+              }}
+              CloseIconComponent={CloseIconComponent}
+              TickIconComponent={TickIconComponent}
+              ArrowDownIconComponent={ArrowDownIconComponent}
+              modalContentContainerStyle={styles.modalContentContainerStyle}
+              listItemLabelStyle={styles.listItemLabelStyle}
+              listItemContainerStyle={styles.listItemContainerStyle}
+              placeholderStyle={styles.dropDownText}
+              textStyle={styles.dropDownText}
               onChangeValue={onChangeValueDropDown}
               placeholder="Seleccioná una divisa"
               open={openDropDownPicker}
@@ -120,18 +141,20 @@ const CalculatorScreen = () => {
             />
           )}
           {!!dropDownPickerValue && (
-            <TextInput
-              style={styles.input}
-              placeholder="0"
-              keyboardType="numeric"
-              placeholderTextColor={GRAY}
-              value={!amountAnyone ? '' : amountAnyone.toString().replace('.', ',')}
-              onChangeText={handleAmountAnyoneChange}
-            />
+            <Animated.View entering={FlipInXUp}>
+              <TextInput
+                style={styles.input}
+                placeholder="0"
+                keyboardType="numeric"
+                placeholderTextColor={GRAY}
+                value={!amountAnyone ? '' : amountAnyone.toString().replace('.', ',')}
+                onChangeText={handleAmountAnyoneChange}
+              />
+            </Animated.View>
           )}
         </>
       )}
-    </View>
+    </ScrollView>
   );
 };
 

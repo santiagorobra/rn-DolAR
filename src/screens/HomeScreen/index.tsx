@@ -43,7 +43,7 @@ const HomeScreen = () => {
     try {
       dispatch(setRefreshing(true));
       const {data} = await getCurrencies();
-      if (data) {
+      if (Array.isArray(data) && data.length) {
         dispatch(setCurrencies(transformResponseData(data)));
         setLastUpdate(moment().format(DATE_FORMAT));
       }
@@ -59,16 +59,18 @@ const HomeScreen = () => {
       setLoading(true);
       try {
         const {data} = await getCurrencies();
-        if (data) {
+        if (Array.isArray(data) && data.length) {
           dispatch(setCurrencies(transformResponseData(data)));
           setLastUpdate(moment().format(DATE_FORMAT));
+        } else if (
+          __DEV__ &&
+          (!Array.isArray(data) || (Array.isArray(data) && data.length === 0))
+        ) {
+          dispatch(setCurrencies(transformResponseData(CURRENCIES_MOCK)));
         }
       } catch (error) {
         console.log(error);
       } finally {
-        if (__DEV__ && currenciesState.length === 0) {
-          dispatch(setCurrencies(transformResponseData(CURRENCIES_MOCK)));
-        }
         setLoading(false);
       }
     })();
@@ -82,7 +84,7 @@ const HomeScreen = () => {
       renderSectionHeader={({section: {title, data}}) =>
         filterQuotations(data) ? <TextCustom style={styles.titleSection} text={title} /> : null
       }
-      ListHeaderComponent={<HeaderList date={lastUpdate} />}
+      ListHeaderComponent={<HeaderList onRefresh={onRefresh} date={lastUpdate} />}
       refreshControl={
         <RefreshControl
           tintColor={WHITE}

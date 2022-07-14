@@ -1,11 +1,10 @@
 import {StyleSheet} from 'react-native';
 
-import {DARK, WHITE} from '@constants/colors';
+import {DARK, GRAY, WHITE} from '@constants/colors';
 
 const COMMOM_STYLE_INPUT = {
   fontSize: 20,
   height: 55,
-  backgroundColor: WHITE,
   borderRadius: 8,
   paddingHorizontal: 10,
   marginVertical: 10,
@@ -23,14 +22,33 @@ const styles = StyleSheet.create({
   },
   label: {
     ...COMMOM_STYLE_INPUT,
-    color: DARK,
+    borderBottomColor: WHITE,
+    borderBottomWidth: 1,
+    borderRadius: 0,
+    backgroundColor: DARK,
+    color: WHITE,
   },
   input: {
     ...COMMOM_STYLE_INPUT,
-    borderWidth: 1,
-    borderColor: WHITE,
+    backgroundColor: WHITE,
+    color: DARK,
+  },
+  modalContentContainerStyle: {
     backgroundColor: DARK,
+    tintColor: WHITE,
     color: WHITE,
+  },
+  listItemLabelStyle: {
+    color: WHITE,
+  },
+  listItemContainerStyle: {
+    borderBottomWidth: 1,
+    borderBottomColor: GRAY,
+    marginTop: 8,
+  },
+  dropDownText: {
+    color: WHITE,
+    fontSize: 20,
   },
 });
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
+import Animated, {FlipInXUp, FlipOutXUp} from 'react-native-reanimated';
 
 import {TextCustom} from '@components/TextCustom';
 import {Quotation} from '@interfaces/currenciesInterface';
@@ -8,7 +9,7 @@ import {formatMoneyFix} from '@utils/money';
 import styles from './styles';
 
 export const RenderItem = ({item: {name, purchase, sale}}: {item: Quotation}) => (
-  <View style={styles.card}>
+  <Animated.View entering={FlipInXUp} exiting={FlipOutXUp} style={styles.card}>
     <View style={styles.headerCard}>
       <TextCustom text={name} style={styles.headerText} />
     </View>
@@ -22,5 +23,5 @@ export const RenderItem = ({item: {name, purchase, sale}}: {item: Quotation}) =>
         <TextCustom text={formatMoneyFix(sale)} style={styles.text} />
       </View>
     </View>
-  </View>
+  </Animated.View>
 );

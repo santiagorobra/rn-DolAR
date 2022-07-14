@@ -28,7 +28,7 @@ const drawerOptions: DrawerNavigationOptions = {
     backgroundColor: DARK,
   },
   title: '',
-  headerRight: () => <TextCustom text={`Alpha ${Config.VERSION}`} />,
+  headerRight: () => <TextCustom text={`Beta ${Config.VERSION}`} />,
 };
 
 const CustomDrawerContent = () => {
