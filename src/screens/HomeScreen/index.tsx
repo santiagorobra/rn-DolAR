@@ -9,13 +9,13 @@ import {StateRedux} from '@interfaces/reduxInterface';
 import {Currencies, SectionListCurrencies} from '@interfaces/currenciesInterface';
 import {getCurrencies} from '@services/currenciesService';
 import {DARK, WHITE} from '@constants/colors';
-import {TextCustom} from '@components/TextCustom';
 import SkeletonCard from '@components/SkeletonComponent';
 import {EmptyList} from '@components/EmptyList';
 import {setCurrencies, setRefreshing} from '@redux/slices/currenciesSlice';
 
 import {CURRENCIES_MOCK} from 'src/mocks/currencies';
 import {HeaderList} from './HeaderList';
+import {SectionHeader} from './SectionHeader';
 import {RenderItem} from './RenderItem';
 import styles from './styles';
 
@@ -29,8 +29,9 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   const transformResponseData = (response: Currencies): SectionListCurrencies =>
-    response.map(({title, currencies}) => ({
+    response.map(({title, icon, currencies}) => ({
       title,
+      icon,
       data: currencies.map(currency => ({
         ...{...currency},
         purchase: formatMoney(currency.purchase),
@@ -81,10 +82,10 @@ const HomeScreen = () => {
       sections={currenciesState}
       style={styles.container}
       renderItem={({item}) => (item.show ? <RenderItem item={item} /> : null)}
-      renderSectionHeader={({section: {title, data}}) =>
-        filterQuotations(data) ? <TextCustom style={styles.titleSection} text={title} /> : null
-      }
       ListHeaderComponent={<HeaderList onRefresh={onRefresh} date={lastUpdate} />}
+      renderSectionHeader={({section: {title, icon, data}}) =>
+        filterQuotations(data) ? <SectionHeader title={title} iconBase64={icon} /> : null
+      }
       refreshControl={
         <RefreshControl
           tintColor={WHITE}
