@@ -9,6 +9,7 @@ const COMMOM_STYLE_INPUT = {
   paddingHorizontal: 10,
   marginVertical: 10,
 };
+const SIZE_FLAGS = 50;
 
 const styles = StyleSheet.create({
   container: {
@@ -45,10 +46,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: GRAY,
     marginTop: 8,
+    height: 65,
   },
   dropDownText: {
     color: WHITE,
     fontSize: 20,
+  },
+  flag: {
+    width: SIZE_FLAGS,
+    height: SIZE_FLAGS,
   },
 });
 

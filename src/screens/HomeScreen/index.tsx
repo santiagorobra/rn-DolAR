@@ -24,8 +24,9 @@ const DATE_FORMAT = 'DD/MM/YYYY HH:mm:ss';
 const HomeScreen = () => {
   const [lastUpdate, setLastUpdate] = useState('');
   const [loading, setLoading] = useState(false);
-  const currenciesState = useSelector((state: StateRedux) => state.currenciesReducer.currencies);
-  const refreshing = useSelector((state: StateRedux) => state.currenciesReducer.refreshing);
+  const {currencies: currenciesState, refreshing} = useSelector(
+    ({currenciesReducer}: StateRedux) => currenciesReducer,
+  );
   const dispatch = useDispatch();
 
   const transformResponseData = (response: Currencies): SectionListCurrencies =>

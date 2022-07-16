@@ -3,6 +3,7 @@ import {View, Image} from 'react-native';
 
 import {TextCustom} from '@components/TextCustom';
 import {Nullable} from '@interfaces/globalInterfaces';
+import {getImageUri} from '@utils/images';
 
 import styles from './styles';
 
@@ -12,10 +13,10 @@ interface Props {
 }
 
 export const SectionHeader = ({title, iconBase64}: Props) => {
-  const uri = `data:image/png;base64,${iconBase64}`;
+  const uri = getImageUri(iconBase64);
   return (
     <View style={styles.container}>
-      {!!iconBase64 && <Image source={{uri}} style={styles.icon} />}
+      {!!uri && <Image source={{uri}} style={styles.icon} />}
       <TextCustom style={styles.title} text={title} />
     </View>
   );

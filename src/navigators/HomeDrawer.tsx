@@ -35,7 +35,9 @@ const drawerOptions: DrawerNavigationOptions = {
 };
 
 const CustomDrawerContent = () => {
-  const currenciesState = useSelector((state: StateRedux) => state.currenciesReducer.currencies);
+  const {currencies: currenciesState} = useSelector(
+    ({currenciesReducer}: StateRedux) => currenciesReducer,
+  );
   const dispatch = useDispatch();
   return (
     <DrawerContentScrollView style={{backgroundColor: BACKGROUND_LIST}}>

@@ -7,6 +7,8 @@ export const validateIsNumber = (price: string | number): number => {
   return price;
 };
 
+export const formatDecimal = (price: number): string => price.toString().replace('.', ',');
+
 export const formatMoney = (price: string | number): string =>
   validateIsNumber(price)
     .toString()

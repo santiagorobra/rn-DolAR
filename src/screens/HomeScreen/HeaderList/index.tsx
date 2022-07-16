@@ -16,7 +16,7 @@ interface Props {
 }
 
 export const HeaderList = ({onRefresh, date}: Props) => {
-  const refreshing = useSelector((state: StateRedux) => state.currenciesReducer.refreshing);
+  const {refreshing} = useSelector(({currenciesReducer}: StateRedux) => currenciesReducer);
 
   return (
     <Animated.View entering={FadeInLeft}>

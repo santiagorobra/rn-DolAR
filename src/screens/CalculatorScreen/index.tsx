@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, TextInput} from 'react-native';
+import {Image, ScrollView, TextInput} from 'react-native';
 import {useSelector} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,7 +9,8 @@ import {StateRedux} from '@interfaces/reduxInterface';
 import {Quotation} from '@interfaces/currenciesInterface';
 import {TextCustom} from '@components/TextCustom';
 import {EmptyList} from '@components/EmptyList';
-import {validateIsNumber} from '@utils/money';
+import {formatDecimal, validateIsNumber} from '@utils/money';
+import {getImageUri} from '@utils/images';
 import {GRAY, WHITE} from '@constants/colors';
 
 import styles from './styles';
@@ -24,14 +25,18 @@ const SIZE_ICONS = 25;
 const CloseIconComponent = () => <Icon name="close" size={SIZE_ICONS} color={WHITE} />;
 const TickIconComponent = () => <Icon name="checkmark" size={SIZE_ICONS} color={WHITE} />;
 const ArrowDownIconComponent = () => <Icon name="chevron-down" size={SIZE_ICONS} color={WHITE} />;
+const FlagItemIconComponent = ({uri}: {uri: string}) => (
+  <Image source={{uri}} style={styles.flag} />
+);
 
 const CalculatorScreen = () => {
   const [amountArg, setAmountArg] = useState(1);
   const [amountAnyone, setAmountAnyone] = useState(1);
 
   const [currentCurrency, setCurrentCurrency] = useState(1);
-  const currenciesState = useSelector((state: StateRedux) => state.currenciesReducer.currencies);
-  const refreshing = useSelector((state: StateRedux) => state.currenciesReducer.refreshing);
+  const {currencies: currenciesState, refreshing} = useSelector(
+    ({currenciesReducer}: StateRedux) => currenciesReducer,
+  );
 
   const [dropDownPickerValue, setDropDownPickerValue] = useState(null);
   const [openDropDownPicker, setOpenDropDownPicker] = useState(false);
@@ -76,11 +81,15 @@ const CalculatorScreen = () => {
   useEffect(() => {
     if (currenciesState.length && !dropDownPickerValue) {
       setDropDownPickerItemsAll(
-        currenciesState.flatMap(({data}) =>
-          data.map(({name, purchase}: Quotation) => ({
-            label: `${name} - ${purchase} pesos`,
-            value: purchase,
-          })),
+        currenciesState.flatMap(({data, icon}) =>
+          data.map(({name, purchase}: Quotation) => {
+            const uri = getImageUri(icon);
+            return {
+              icon: uri ? () => <FlagItemIconComponent uri={uri} /> : null,
+              label: `${name} - ${purchase} pesos`,
+              value: purchase,
+            };
+          }),
         ),
       );
     }
@@ -110,7 +119,7 @@ const CalculatorScreen = () => {
                 placeholder="0"
                 keyboardType="numeric"
                 placeholderTextColor={GRAY}
-                value={!amountArg ? '' : amountArg.toString().replace('.', ',')}
+                value={!amountArg ? '' : formatDecimal(amountArg)}
                 onChangeText={handleAmountArgChange}
               />
             </Animated.View>
@@ -122,6 +131,7 @@ const CalculatorScreen = () => {
               modalProps={{
                 animationType: 'slide',
               }}
+              itemKey="label"
               CloseIconComponent={CloseIconComponent}
               TickIconComponent={TickIconComponent}
               ArrowDownIconComponent={ArrowDownIconComponent}
@@ -147,7 +157,7 @@ const CalculatorScreen = () => {
                 placeholder="0"
                 keyboardType="numeric"
                 placeholderTextColor={GRAY}
-                value={!amountAnyone ? '' : amountAnyone.toString().replace('.', ',')}
+                value={!amountAnyone ? '' : formatDecimal(amountAnyone)}
                 onChangeText={handleAmountAnyoneChange}
               />
             </Animated.View>
