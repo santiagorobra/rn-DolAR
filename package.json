@@ -9,6 +9,7 @@
     "android:release": "cd android && ./gradlew assembleRelease",
     "android:prod:release": "cd android && ./gradlew bundleRelease",
     "android:open": "open android/app/build/outputs",
+    "android:clean": "cd android && ./gradlew clean && cd ..",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint --fix src",

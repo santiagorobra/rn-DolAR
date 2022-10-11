@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, ScrollView, TextInput} from 'react-native';
+import {Image, ScrollView, TextInput, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -82,12 +82,12 @@ const CalculatorScreen = () => {
     if (currenciesState.length && !dropDownPickerValue) {
       setDropDownPickerItemsAll(
         currenciesState.flatMap(({data, icon}) =>
-          data.map(({name, purchase}: Quotation) => {
+          data.map(({name, sale}: Quotation) => {
             const uri = getImageUri(icon);
             return {
               icon: uri ? () => <FlagItemIconComponent uri={uri} /> : null,
-              label: `${name} - ${purchase} pesos`,
-              value: purchase,
+              label: `${name} - ${sale} pesos`,
+              value: sale,
             };
           }),
         ),
@@ -102,16 +102,22 @@ const CalculatorScreen = () => {
       ) : (
         <>
           <TextCustom
-            text="Para la Compra: Calculá pesos Argentinos a cualquier divisa o viceversa"
+            text="Calculá pesos Argentinos a cualquier divisa o viceversa"
             style={styles.title}
           />
-          <TextInput
-            style={styles.label}
-            placeholder="Pesos Argentinos"
-            editable={false}
-            selectTextOnFocus={false}
-            placeholderTextColor={WHITE}
-          />
+          <View style={styles.labelContainerAr}>
+            <Image
+              source={require('../../../assets/flags/ar.png')}
+              style={[styles.flag, styles.flagAr]}
+            />
+            <TextInput
+              style={styles.labelAr}
+              placeholder="Pesos Argentinos"
+              editable={false}
+              selectTextOnFocus={false}
+              placeholderTextColor={WHITE}
+            />
+          </View>
           {!!dropDownPickerValue && (
             <Animated.View entering={FlipInXUp}>
               <TextInput
