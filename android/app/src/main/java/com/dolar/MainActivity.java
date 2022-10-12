@@ -1,4 +1,4 @@
-package com.dolar;
+package com.dolar.zesk;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

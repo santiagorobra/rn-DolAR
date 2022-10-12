@@ -1,4 +1,4 @@
-package com.dolar.newarchitecture.components;
+package com.dolar.zesk.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

@@ -38,7 +38,7 @@ const CalculatorScreen = () => {
     ({currenciesReducer}: StateRedux) => currenciesReducer,
   );
 
-  const [dropDownPickerValue, setDropDownPickerValue] = useState(null);
+  const [dropDownPickerValue, setDropDownPickerValue] = useState('');
   const [openDropDownPicker, setOpenDropDownPicker] = useState(false);
   const [dropDownPickerItemsAll, setDropDownPickerItemsAll] = useState<DropDownPickerItems>([]);
 
@@ -64,16 +64,19 @@ const CalculatorScreen = () => {
     }
   };
 
-  const onChangeValueDropDown = (preValue: any) => {
-    setCurrentCurrency(preValue);
-    setAmountAnyone(1);
-    setAmountArg(preValue);
+  const onChangeValueDropDown = (preValue: string | null) => {
+    if (preValue) {
+      const value = validateIsNumber(preValue.split('-')[1].trim());
+      setCurrentCurrency(value);
+      setAmountAnyone(1);
+      setAmountArg(value);
+    }
   };
 
   useEffect(() => {
     if (refreshing) {
       setOpenDropDownPicker(false);
-      setDropDownPickerValue(null);
+      setDropDownPickerValue('');
       setDropDownPickerItemsAll([]);
     }
   }, [refreshing]);
@@ -87,7 +90,7 @@ const CalculatorScreen = () => {
             return {
               icon: uri ? () => <FlagItemIconComponent uri={uri} /> : null,
               label: `${name} - ${sale} pesos`,
-              value: sale,
+              value: `${name} - ${sale}`,
             };
           }),
         ),
